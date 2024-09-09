@@ -1,0 +1,29 @@
+{
+  "users": [
+    {
+      "id": "99ab",
+      "email": "erfanhpcar@gmail.com",
+      "password": "erfanhp7979",
+      "username": "erfanhpcar",
+      "fullName": "Erfan Hosseinpour"
+    },
+    {
+      "id": "d832",
+      "username": "erfanhpcar",
+      "password": "erfanhp7979"
+    }
+  ],
+  "ads": [
+    {
+      "phone": "09213967079",
+      "address": "Tehranpars",
+      "description": "khune kheili khubie.",
+      "location": {
+        "lat": 51.505,
+        "lng": -0.09
+      },
+      "userId": "99ab",
+      "id": "d8aa"
+    }
+  ]
+}
