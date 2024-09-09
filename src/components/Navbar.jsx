@@ -20,15 +20,15 @@ const NavBar = () => {
 
     return (
         <AppBar
-            position="static"
-            className="bg-transparent max-w-[90vw] overflow-y-hidden shadow-lg rounded-lg py-2 px-4 my-4 mx-auto"
+            position='static'
+            className="mx-auto top-0 bg-transparent max-w-[90vw] overflow-y-hidden shadow-lg rounded-lg py-2 px-4 my-4 "
         >
             <Toolbar
                 className="flex justify-between items-center"
             >
                 {user ? (
                     <>
-                        <Typography variant="h6" sx={{ marginRight: 2, color: '#000' }}>
+                        <Typography variant="h6" className='mr-2 text-white'>
                             {user.fullName}
                         </Typography>
 
@@ -45,7 +45,7 @@ const NavBar = () => {
                     onClick={() => navigate('/')}
                     className="bg-white rounded-full shadow-md mx-auto hover:bg-gray-200"
                 >
-                    <Home fontSize="large" />
+                    <Home fontSize="large" className='text-white' />
                 </IconButton>
 
                 {/* Right side: Add Ad button (if user is logged in) */}

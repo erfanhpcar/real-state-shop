@@ -44,7 +44,7 @@ const Ads = () => {
     if (loading) return <div className="flex justify-center items-center h-screen"><CircularProgress /></div>;
 
     return (
-        <div className="min-h-screen bg-gradient-to-r from-blue-50 via-gray-100 to-white py-8">
+        <div className="py-8 ">
             <Container maxWidth="lg">
                 <Typography variant="h4" component="h1" gutterBottom className="text-blue-900 text-center mb-8 font-semibold">
                     Real Estate Listings
