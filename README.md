@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+Real Estate Ads Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the Real Estate Ads Application! This web application allows users to manage real estate advertisements with functionalities such as creating, editing, and deleting ads. The application is built using React, Material UI, and Leaflet.
+Features
 
-## Available Scripts
+    User Authentication: Users can sign up, sign in, and manage their accounts.
+    Ad Management: Users can create new real estate ads, view them, and manage their details.
+    Edit & Delete Ads: Users can only edit or delete their own ads.
+    Responsive Design: Fully responsive for both mobile and desktop views.
+    Interactive Map: Use Leaflet for selecting and displaying property locations.
 
-In the project directory, you can run:
+Key Note
 
-### `npm start`
+    Owner Restriction: Only the owner of an ad has the rights to delete or edit it. If you try to modify or remove an ad that you do not own, you will encounter an error message.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Technologies Used
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    React: Front-end library for building user interfaces.
+    Material UI: For design components and styling.
+    Leaflet: For interactive map functionalities.
+    Formik & Yup: For form management and validation.
+    Axios: For API requests.
+    React Router: For navigation and routing.
 
-### `npm test`
+Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    Node.js (v12 or later) installed on your machine.
+    A running backend server that supports the necessary endpoints for authentication, ad creation, and management.
 
-### `npm run build`
+Installation
+1. Clone the Repository
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+bash
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+git clone https://github.com/your-username/real-estate-ads-app.git
+cd real-estate-ads-app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Install Dependencies
 
-### `npm run eject`
+bash
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Start the Development Server
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+bash
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+npm start
 
-## Learn More
+The application will be available at http://localhost:3000.
+API Configuration
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Make sure your backend server is running and configured at http://localhost:5000. The server should support the following endpoints:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    POST /login: User login.
+    POST /ads: Create a new ad.
+    PUT /ads/:id: Update an existing ad.
+    GET /ads/:id: Retrieve details of a specific ad.
+    DELETE /ads/:id: Delete a specific ad.
 
-### Code Splitting
+Responsive Design
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The application features a responsive design:
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    On desktop, the navbar includes the home icon centered, with user actions (like logout) and ad management options.
+    On mobile, the navbar adjusts to a full-width layout with a hamburger menu. The menu includes logout and add real estate ad options, while the full name of the user is hidden for a cleaner look.
