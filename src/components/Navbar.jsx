@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, IconButton, Button, Box, Typography, ButtonGroup, Drawer, List, ListItem, ListItemText } from '@mui/material';
-import { Home, ExitToApp, Menu as MenuIcon } from '@mui/icons-material'; // Import icons
+import { Home, ExitToApp, Menu as MenuIcon } from '@mui/icons-material'; 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const NavBar = () => {
-    const [user, setUser] = useState(null); // Track if the user is logged in
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false); // State for drawer menu
+    const [user, setUser] = useState(null); 
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const navigate = useNavigate();
 
-    // Fetch logged-in user details from local storage (or server if needed)
+    
     useEffect(() => {
         const userId = localStorage.getItem('userId');
         if (userId) {
@@ -20,10 +20,10 @@ const NavBar = () => {
     }, []);
 
     const handleLogout = () => {
-        // Clear the local storage and navigate to the sign-in page
+        
         localStorage.removeItem('userId');
-        setUser(null);  // Clear the user state
-        navigate('/signin');  // Redirect to sign-in page
+        setUser(null); 
+        navigate('/signin');  
     };
 
     const toggleDrawer = (open) => () => {

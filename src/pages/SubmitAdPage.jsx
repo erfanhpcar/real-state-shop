@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { TextField, Button } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import {  useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+import SubmitAdFrom from '../components/SubmitAdFrom';
 
 const SubmitAdPage = () => {
   const [location, setLocation] = useState({ lat: 51.505, lng: -0.09 });
@@ -13,6 +16,16 @@ const SubmitAdPage = () => {
   const [isEditing, setIsEditing] = useState(false); // Track if the form is in edit mode
   const { id } = useParams(); // Get the ad ID from URL if in edit mode
   const navigate = useNavigate();
+
+  // Fix for default Leaflet marker icons not showing
+
+
+let DefaultIcon = L.icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+  iconAnchor: [12, 41] // fixes the offset of the default icon
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
   useEffect(() => {
     const storedUserId = localStorage.getItem('userId');
@@ -85,52 +98,7 @@ const SubmitAdPage = () => {
   return (
     <div className="p-4">
       <h1 className="text-xl mb-4">{isEditing ? 'Edit Real Estate Ad' : 'Submit Real Estate Ad'}</h1>
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          fullWidth
-          label="Phone Number"
-          variant="outlined"
-          margin="normal"
-          {...formik.getFieldProps('phone')}
-          error={formik.touched.phone && Boolean(formik.errors.phone)}
-          helperText={formik.touched.phone && formik.errors.phone}
-        />
-        <TextField
-          fullWidth
-          label="Address"
-          variant="outlined"
-          margin="normal"
-          {...formik.getFieldProps('address')}
-          error={formik.touched.address && Boolean(formik.errors.address)}
-          helperText={formik.touched.address && formik.errors.address}
-        />
-        <TextField
-          fullWidth
-          label="Description"
-          variant="outlined"
-          margin="normal"
-          multiline
-          rows={4}
-          {...formik.getFieldProps('description')}
-          error={formik.touched.description && Boolean(formik.errors.description)}
-          helperText={formik.touched.description && formik.errors.description}
-        />
-
-        <div className="my-4">
-          <MapContainer center={[location.lat, location.lng]} zoom={13} style={{ height: '400px', width: '100%' }}>
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Marker position={[location.lat, location.lng]} />
-            <LocationPicker setLocation={setLocation} />
-          </MapContainer>
-        </div>
-
-        <Button type="submit" variant="contained" color="primary">
-          {isEditing ? 'Update Ad' : 'Submit Ad'}
-        </Button>
-      </form>
+      <SubmitAdFrom formik={formik} location={location} setLocation={setLocation} LocationPicker={LocationPicker} isEditing={isEditing}/>
     </div>
   );
 };
