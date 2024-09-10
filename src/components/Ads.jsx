@@ -1,18 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, CardContent, Typography, Grid, Container, CircularProgress } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Container, CircularProgress, Pagination } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from '@mui/material';
 
 const Ads = () => {
     const [ads, setAds] = useState([]);
     const [users, setUsers] = useState({});
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
     const navigate = useNavigate();
+
+    // Use MediaQuery to detect if the screen is small (mobile) or large (desktop)
+    const isMobile = useMediaQuery('(max-width:600px)');
+    const adsPerPage = isMobile ? 3 : 6; // 3 ads per page for mobile, 6 for desktop
+
+    // Calculate the total number of pages
+    const totalPages = Math.ceil(ads.length / adsPerPage);
+
+    // Get the ads for the current page
+    const currentAds = ads.slice((currentPage - 1) * adsPerPage, currentPage * adsPerPage);
 
     useEffect(() => {
         const fetchAdsAndUsers = async () => {
             try {
-                // Fetch ads and users in parallel
                 const [adsResponse, usersResponse] = await Promise.all([
                     axios.get('http://localhost:5000/ads'),
                     axios.get('http://localhost:5000/users'),
@@ -20,7 +31,6 @@ const Ads = () => {
 
                 setAds(adsResponse.data);
 
-                // Convert users array into an object for quick lookup by userId
                 const usersMap = usersResponse.data.reduce((acc, user) => {
                     acc[user.id] = user;
                     return acc;
@@ -38,19 +48,23 @@ const Ads = () => {
     }, []);
 
     const handleCardClick = (ad) => {
-        navigate(`/realestate/${ad.id}`); // Navigate to the real estate detail page using the ID
+        navigate(`/realestate/${ad.id}`);
+    };
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
     };
 
     if (loading) return <div className="flex justify-center items-center h-screen"><CircularProgress /></div>;
 
     return (
-        <div className="py-8 ">
+        <div className="py-8">
             <Container maxWidth="lg">
                 <Typography variant="h4" component="h1" gutterBottom className="text-blue-900 text-center mb-8 font-semibold">
                     Real Estate Listings
                 </Typography>
                 <Grid container spacing={4}>
-                    {ads.map(ad => (
+                    {currentAds.map(ad => (
                         <Grid item xs={12} sm={6} md={4} key={ad.id}>
                             <Card 
                                 className="shadow-lg rounded-lg border border-gray-300 transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer"
@@ -77,6 +91,15 @@ const Ads = () => {
                         </Grid>
                     ))}
                 </Grid>
+                {/* Pagination Component */}
+                <div className="flex justify-center mt-8">
+                    <Pagination 
+                        count={totalPages} 
+                        page={currentPage} 
+                        onChange={handlePageChange} 
+                        color="primary" 
+                    />
+                </div>
             </Container>
         </div>
     );

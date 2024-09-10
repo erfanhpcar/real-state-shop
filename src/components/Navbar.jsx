@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Button, Box, Typography, ButtonGroup } from '@mui/material';
-import { Home } from '@mui/icons-material';
+import { AppBar, Toolbar, IconButton, Button, Box, Typography, ButtonGroup, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Home, ExitToApp, Menu as MenuIcon } from '@mui/icons-material'; // Import icons
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const NavBar = () => {
     const [user, setUser] = useState(null); // Track if the user is logged in
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false); // State for drawer menu
     const navigate = useNavigate();
 
     // Fetch logged-in user details from local storage (or server if needed)
@@ -18,52 +19,99 @@ const NavBar = () => {
         }
     }, []);
 
+    const handleLogout = () => {
+        // Clear the local storage and navigate to the sign-in page
+        localStorage.removeItem('userId');
+        setUser(null);  // Clear the user state
+        navigate('/signin');  // Redirect to sign-in page
+    };
+
+    const toggleDrawer = (open) => () => {
+        setIsDrawerOpen(open);
+    };
+
     return (
         <AppBar
-            position='static'
-            className="mx-auto top-0 bg-transparent max-w-[90vw] overflow-y-hidden shadow-lg rounded-lg py-2 px-4 my-4 "
+            position="static"
+            className="bg-transparent md:!w-[90vw]  mx-auto shadow-lg md:rounded-lg py-2 px-4 mb-4"
         >
-            <Toolbar
-                className="flex justify-between items-center"
-            >
-                {user ? (
-                    <>
-                        <Typography variant="h6" className='mr-2 text-white'>
-                            {user.fullName}
-                        </Typography>
-
-                    </>
-                ) : (
-                    // Left side: Sign-in / Sign-up buttons (if user not logged in)
-                    <ButtonGroup variant="contained" className="bg-blue-500 hover:bg-blue-700" color="primary">
-                        <Button onClick={() => navigate('/signin')}>Sign In</Button>
-                        <Button onClick={() => navigate('/signup')}>Sign Up</Button>
-                    </ButtonGroup>
-                )}
-                {/* Centered Home Icon */}
+            <Toolbar className="flex justify-between items-center">
+                
+                 {/* Desktop View: Full Name and Logout Icon */}
+                 <Box className="hidden md:flex" alignItems="center">
+                    {user && (
+                        <>
+                            <IconButton
+                                onClick={handleLogout}
+                                className="hover:bg-gray-100"
+                            >
+                                <ExitToApp fontSize="large" className="text-red-500" /> {/* Logout icon */}
+                            </IconButton>
+                            <Typography variant="h6" className="ml-2 text-white">
+                                {user.fullName}
+                            </Typography>
+                        </>
+                    )}
+                </Box>
+                
+                
+                {/* Home Icon (Always on the left for both desktop and mobile) */}
                 <IconButton
                     onClick={() => navigate('/')}
-                    className="bg-white rounded-full shadow-md mx-auto hover:bg-gray-200"
+                    className="bg-white rounded-full shadow-md hover:bg-gray-200"
                 >
-                    <Home fontSize="large" className='text-white' />
+                    <Home fontSize="large" className="text-white" />
                 </IconButton>
 
-                {/* Right side: Add Ad button (if user is logged in) */}
+               
 
+                {/* Desktop View: Add Real Estate Ad Button */}
                 {user && (
-                    <>
-
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            className="bg-blue-500 hover:bg-blue-700"
-                            onClick={() => navigate('/submit-ad')}
-                        >
-                            Add Real Estate Ad
-                        </Button>
-                    </>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        
+                        className="!hidden md:!block bg-blue-500 hover:bg-blue-700"
+                        onClick={() => navigate('/submit-ad')}
+                    >
+                        Add Real Estate Ad
+                    </Button>
                 )}
 
+                {/* Mobile View: Hamburger Menu */}
+                <Box className="md:hidden">
+                    <IconButton
+                        edge="end"
+                        color="inherit"
+                        onClick={toggleDrawer(true)}
+                    >
+                        <MenuIcon fontSize="large" className="text-white" />
+                    </IconButton>
+                </Box>
+
+                {/* Drawer for mobile view */}
+                <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+                    <Box
+                        sx={{ width: 250 }}
+                        role="presentation"
+                        onClick={toggleDrawer(false)}
+                        onKeyDown={toggleDrawer(false)}
+                    >
+                        <List>
+                            {user && (
+                                <>
+                                    <ListItem button onClick={handleLogout}>
+                                        <ExitToApp className="text-red-500" />
+                                        <ListItemText primary="Logout" />
+                                    </ListItem>
+                                    <ListItem button onClick={() => navigate('/submit-ad')}>
+                                        <ListItemText primary="Add Real Estate Ad" />
+                                    </ListItem>
+                                </>
+                            )}
+                        </List>
+                    </Box>
+                </Drawer>
             </Toolbar>
         </AppBar>
     );

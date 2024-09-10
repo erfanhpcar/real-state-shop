@@ -15,11 +15,20 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="*" element={<NotFound />} /> {/* Catch-all for 404 */}
+        <Route path="*" element={<NotFound />} />
+
+        {/* Route for submitting a new ad */}
+        <Route
+          path="/submit-ad"
+          element={<ProtectedRoute element={SubmitAdPage} />}
+        />
+
+        {/* Route for editing an ad */}
         <Route
           path="/submit-ad/:id"
           element={<ProtectedRoute element={SubmitAdPage} />}
         />
+
         <Route path="/realestate/:id" element={<RealEstateDetail />} />
       </Routes>
     </Router>

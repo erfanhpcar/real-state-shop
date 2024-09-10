@@ -4,7 +4,7 @@ import NavBar from '../components/Navbar'
 
 function Home() {
   return (
-    <div className="relative  min-h-screen bg-gradient-to-r from-blue-50 via-gray-100 to-white">
+    <div className="relative md:pt-4  min-h-screen bg-gradient-to-r from-blue-50 via-gray-100 to-white">
       <NavBar />
       <Ads />
     </div>
