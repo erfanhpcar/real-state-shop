@@ -1,12 +1,6 @@
 {
   "users": [
-    {
-      "id": "99ab",
-      "email": "erfanhpcar@gmail.com",
-      "password": "erfanhp7979",
-      "username": "erfanhpcar",
-      "fullName": "Erfan Hosseinpour"
-    },
+    
     {
       "id": "4bd6",
       "fullName": "javad khajavi",
@@ -17,7 +11,7 @@
   ],
   "ads": [
     {
-      "phone": "09213967079",
+      "phone": "0912345678",
       "address": "Tehranpars",
       "description": "khune kheili khubie.",
       "location": {
@@ -37,6 +31,17 @@
         "lng": 51.39404296875001
       },
       "userId": "4bd6"
+    },
+    {
+      "phone": "09123456789",
+      "address": "london shadwell",
+      "description": "nice looking  big house",
+      "location": {
+        "lat": 51.505,
+        "lng": -0.09
+      },
+      "userId": "99ab",
+      "id": "ebe3"
     }
   ]
 }
